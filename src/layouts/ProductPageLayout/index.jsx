@@ -12,7 +12,6 @@ const ProductPageLayout = () => {
   const [loading, setLoading] = useState(true);
   const theme = useTheme();
 
-  console.log("add products:")
   const fetchProducts = async () => {
     setLoading(true);
     const { products } = await getProducts(
