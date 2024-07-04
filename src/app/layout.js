@@ -1,6 +1,4 @@
 import LayoutWrapper from "@/layouts/LayoutWrapper";
-import theme from "@/theme";
-import { CssBaseline, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -17,10 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <AppRouterCacheProvider>
         <body className={inter.className}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <LayoutWrapper>{children}</LayoutWrapper>
-          </ThemeProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
         </body>
       </AppRouterCacheProvider>
     </html>

@@ -1,4 +1,4 @@
-import { categories } from '@/utills/constant';
+import { brands } from '@/utils/constants';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Box, IconButton, Link } from '@mui/material';
@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useEffect, useRef, useState } from 'react';
 
-const CategoryBar = () => {
+const BrandBar = () => {
     const scrollContainerRef = useRef(null);
     const [showScrollButtons, setShowScrollButtons] = useState(false);
 
@@ -80,7 +80,7 @@ const CategoryBar = () => {
                 </IconButton>
             )}
 
-            {/* Category links */}
+            {/* Brand links */}
             <Box
                 ref={scrollContainerRef}
                 sx={{
@@ -100,10 +100,10 @@ const CategoryBar = () => {
                     'scrollbar-width': 'none',
                 }}
             >
-                {categories.map((category, index) => (
+                {brands.map((brand, index) => (
                     <Link
                         key={index}
-                        href={`/${category.toLowerCase().replace(/ /g, '-')}`}
+                        href={`/${brand.toLowerCase().replace(/ /g, '-')}`}
                         underline="none"
                         sx={{
                             color: 'rgba(0, 0, 0, 0.6)',
@@ -119,11 +119,10 @@ const CategoryBar = () => {
                             fontSize: '1rem',
                             '&:hover': {
                                 color: 'rgba(0, 0, 0, 0.8)',
-                                borderBottomColor: theme.palette.primary.main,
                             },
                         }}
                     >
-                        {category}
+                        {brand}
                     </Link>
                 ))}
             </Box>
@@ -151,4 +150,4 @@ const CategoryBar = () => {
     );
 };
 
-export default CategoryBar;
+export default BrandBar;

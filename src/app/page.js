@@ -1,8 +1,7 @@
 import ProductPageLayout from "@/layouts/ProductPageLayout";
 
-const ProductsPage = ({ searchQuery }) => {
-  console.log("inside page.js", searchQuery);
-  return <ProductPageLayout searchQuery={searchQuery} />;
+const ProductsPage = () => {
+  return <ProductPageLayout />;
 };
 
 export default ProductsPage;
