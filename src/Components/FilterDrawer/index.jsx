@@ -32,6 +32,8 @@ export default function FilterDrawer({
   const [totalBrands, setTotalBrands] = React.useState(0);
   const [loading, setLoading] = React.useState(false || !brands?.length);
   const [selectedBrands, setSelectedBrands] = React.useState([]);
+  const [alertInfo, setAlertInfo] = React.useState({ type: "", message: "" });
+  const [displayAlert, setDisplayAlert] = React.useState(false);
 
   const fetchBrands = async () => {
     setLoading(true);
