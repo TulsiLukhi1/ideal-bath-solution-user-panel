@@ -1,15 +1,15 @@
-import CategoryBar from '@/Components/CategoryBar'
-import TopBar from '@/Components/TopBar'
-import React from 'react'
+import TopBar from '@/Components/TopBar';
 
-const MainLayout = ({children}) => {
+const MainLayout = ({ children }) => {
+
   return (
     <>
-      <TopBar />
-      <CategoryBar />
+      <div className='nav-shadow'>
+        <TopBar />
+      </div>
       {children}
     </>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

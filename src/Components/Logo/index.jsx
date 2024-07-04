@@ -19,7 +19,7 @@ const Logo = () => {
         <text x="0" y="32" className={dancingScript.className} fontSize="40" fill="black" fontWeight={900}>
           Ideal Bath
         </text>
-        <text x="22" y="52" className={oswald.className} fontSize="15" fill={theme.palette.primary.main} fontWeight="bold" alignItems="center" letterSpacing={6} >
+        <text x="22" y="52" className={oswald.className} fontSize="15" fontWeight="bold" alignItems="center" letterSpacing={6} >
           SOLUTIONS
         </text>
       </svg>
