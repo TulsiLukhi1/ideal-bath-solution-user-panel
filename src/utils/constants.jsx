@@ -1,27 +1,10 @@
-
-export const brands = [
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-  "Brand1",
-];
-
 export const NO_IMAGE = process.env.NEXT_PUBLIC_NO_IMAGE;
 export const MIN_DELAY_TIME = 700;
+
+export const TOPBAR_MENU = [
+  { label: "Products", href: "/" },
+  { label: "Enquiries", href: "/enquiries" },
+]
 
 export const PROFILE_DROPDOWN_MENU = [
   { label: "Profile", href: "profile" },

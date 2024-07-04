@@ -60,7 +60,8 @@
 
 .search-div {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-block: 36px;
 }
 
@@ -74,11 +75,11 @@
   overflow: hidden;
 }
 
-.liner-1{
+.liner-1 {
   -webkit-line-clamp: 1;
 }
 
-.liner-2{
+.liner-2 {
   -webkit-line-clamp: 2;
 }
 /* water drop spinner */

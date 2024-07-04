@@ -1,30 +1,28 @@
 "use client";
 
 import Container from "@/Components/Container";
+import FilterDrawer from "@/Components/FilterDrawer";
 import ProductCard from "@/Components/ProductCard";
+import SearchField from "@/Components/SearchField";
 import WaterDropSpinner from "@/Components/WaterDropSpinner";
 import NoData from "@/components/NoData";
-import Notification from "@/components/Notification";
 import { getProducts } from "@/utils/callers/products";
 import { MIN_DELAY_TIME, ROWS_PER_PAGE } from "@/utils/constants";
-import { TextField } from "@mui/material";
+import { FilterAlt } from "@mui/icons-material";
+import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 const ProductPageLayout = () => {
-  const [openNotification, setOpenNotification] = React.useState(false);
-  const [notificationInfo, setNotificationInfo] = React.useState({
-    type: "success",
-    message: "",
-  });
-
   const [products, setProducts] = React.useState([]);
+  const [selectedBrands, setSelectedBrands] = React.useState([]);
   const [offset, setOffest] = React.useState(0);
   const [totalProducts, setTotalProducts] = React.useState(0);
   const [loading, setLoading] = React.useState(false || !products?.length);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [openFilter, setOpenFilter] = React.useState(false);
   const [alertInfo, setAlertInfo] = React.useState({ type: "", message: "" });
   const [displayAlert, setDisplayAlert] = React.useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const { ref, inView } = useInView();
 
   const fetchProducts = async () => {
@@ -38,7 +36,8 @@ const ProductPageLayout = () => {
       "/products",
       !searchQuery && !offset ? 0 : offset,
       ROWS_PER_PAGE,
-      searchQuery.trim()
+      searchQuery.trim(),
+      selectedBrands
     );
 
     // sucess status code is 2xx
@@ -89,7 +88,60 @@ const ProductPageLayout = () => {
       "/products",
       0,
       ROWS_PER_PAGE,
-      searchQuery.trim()
+      searchQuery.trim(),
+      selectedBrands
+    );
+
+    // sucess status code is 2xx
+    if (status >= 200 && status < 300) {
+      setTimeout(() => {
+        setProducts(products);
+        setOffest(products.length);
+        setTotalProducts(total);
+        setLoading(false);
+      }, MIN_DELAY_TIME);
+    }
+
+    // client error status code is 4xx
+    if (status >= 400 && status < 500) {
+      setLoading(false);
+      setDisplayAlert(true);
+      setAlertInfo({ type: "error", message: `${errorMessage}` });
+      setTotalProducts(0);
+      setProducts([]);
+      return;
+    }
+
+    // server error status code is 5xx
+    if (status >= 500 && status < 600) {
+      setLoading(false);
+      setDisplayAlert(true);
+      setAlertInfo({
+        type: "error",
+        message: `Error : ${errorMessage}`,
+      });
+      setTotalProducts(0);
+      setProducts([]);
+      return;
+    }
+  };
+
+  const filterProducts = async (brandIds) => {
+    setOffest(0);
+    setTotalProducts(0);
+    setProducts([]);
+    setLoading(true);
+    const {
+      products,
+      totalProducts: total,
+      errorMessage,
+      status,
+    } = await getProducts(
+      "/products",
+      0,
+      ROWS_PER_PAGE,
+      searchQuery.trim(),
+      brandIds
     );
 
     // sucess status code is 2xx
@@ -136,7 +188,8 @@ const ProductPageLayout = () => {
       "/products",
       !searchQuery && !offset ? 0 : offset,
       ROWS_PER_PAGE,
-      searchQuery.trim()
+      searchQuery.trim(),
+      selectedBrands
     );
 
     // sucess status code is 2xx
@@ -170,9 +223,18 @@ const ProductPageLayout = () => {
     }
   };
 
+  function filterHandler(selectedBrands) {
+    setSelectedBrands(selectedBrands);
+    filterProducts(selectedBrands);
+  }
+
   React.useEffect(() => {
     fetchProducts();
   }, []);
+
+  React.useEffect(() => {
+    searchProducts();
+  }, [searchQuery]);
 
   React.useEffect(() => {
     searchProducts();
@@ -184,25 +246,22 @@ const ProductPageLayout = () => {
 
   return (
     <Container>
-      <Notification
-        message={notificationInfo.message}
-        open={openNotification}
-        setOpen={setOpenNotification}
-        type={notificationInfo.type}
+      <FilterDrawer
+        open={openFilter}
+        setOpen={setOpenFilter}
+        onFilter={filterHandler}
       />
       <div className="search-div">
-        <TextField
-          type="search"
-          label="Search products"
-          placeholder="Name or Brand"
-          variant="outlined"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          size="small"
-          style={{ marginLeft: "auto" }}
-        />
+        <Button
+          startIcon={<FilterAlt color="warning" />}
+          className="capitalize"
+          color="warning"
+          onClick={() => setOpenFilter(!openFilter)}
+        >
+          Filter
+        </Button>
+        <SearchField searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       </div>
-
       {loading ? (
         <WaterDropSpinner />
       ) : products.length ? (
