@@ -1,7 +1,7 @@
 "use client";
 import Logo from "../Logo";
 import MenuItems from "../MenuItems";
-import AvtarMenu from "../ProfileDropdown";
+import AvtarMenu from "../AvtarMenu";
 
 const TopBar = () => {
   return (
