@@ -86,7 +86,7 @@ const EnquiryPageLayout = () => {
                 style={{ marginBottom: "2rem" }}
                 className="p-4 rounded-md bg-gray-50"
               >
-                <div className="border-b py-4 rounded-md mb-4 flex text-xs items-center justify-between">
+                <div className="py-4 rounded-md mb-4 flex text-xs items-center justify-between">
                   <div className="flex items-center gap-x-2">
                     <CalendarMonth color="warning" />
                     <p>

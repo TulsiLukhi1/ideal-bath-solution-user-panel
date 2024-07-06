@@ -33,6 +33,7 @@ export default function Sidebar({ open = false, setOpen = () => {} }) {
               {TOPBAR_MENU.map((menuItem) => {
                 return (
                   <Link
+                  key={menuItem.href}
                     href={menuItem.href}
                     className="text-sm uppercase px-5 py-2 flex justify-between items-center gap-x-3 border-b"
                     onClick={() => setOpen(false)}
