@@ -5,8 +5,12 @@ export const NO_IMAGE = process.env.NEXT_PUBLIC_NO_IMAGE;
 export const MIN_DELAY_TIME = 700;
 
 export const TOPBAR_MENU = [
-  { label: "Products", href: "/", icon: <Inventory /> },
-  { label: "Enquiries", href: "/enquiries", icon: <HelpCenter /> },
+  { label: "Products", href: "/", icon: <Inventory fontSize="small" /> },
+  {
+    label: "Enquiries",
+    href: "/enquiries",
+    icon: <HelpCenter fontSize="small" />,
+  },
 ];
 
 export const SIDEBAR_MENU = [

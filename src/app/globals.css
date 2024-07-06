@@ -36,6 +36,12 @@ body {
   }
 }
 
+@media (max-width: 567px) {
+  .filter-panel {
+    top: 7% !important;
+  }
+}
+
 .log-out-btn {
   display: block;
 }
@@ -63,6 +69,9 @@ body {
     background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0%;
   }
 }
+.menu-item {
+  font-size: 0.9rem;
+}
 
 .nav-shadow {
   /* box-shadow: 0px 8px 10px -11px rgba(0, 0, 0, 0.41); */
@@ -75,7 +84,7 @@ body {
 .filter-panel {
   /* box-shadow: 0px 8px 10px -11px rgba(0, 0, 0, 0.41); */
   position: sticky;
-  top: 55px;
+  top: 9%;
   z-index: 10;
   background: #fff;
 }
@@ -114,8 +123,8 @@ body {
 .liner-2 {
   -webkit-line-clamp: 2;
 }
-/* water drop spinner */
 
+/* water drop spinner */
 .wrap {
   position: absolute;
   width: 100px;

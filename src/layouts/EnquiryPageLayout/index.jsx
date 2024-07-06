@@ -91,8 +91,8 @@ const EnquiryPageLayout = () => {
                     <CalendarMonth color="warning" />
                     <p>
                       Enquiry made on{" "}
-                      <b>{new Date(enquiryOn).toLocaleDateString()}</b> at{" "}
-                      <b>{new Date(enquiryOn).toLocaleTimeString()}</b>
+                      <u>{new Date(enquiryOn).toLocaleDateString()}</u> at{" "}
+                      <u>{new Date(enquiryOn).toLocaleTimeString()}</u>
                     </p>
                   </div>
                   <div>

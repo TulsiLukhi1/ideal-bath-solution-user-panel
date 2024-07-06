@@ -245,7 +245,7 @@ const ProductPageLayout = () => {
   }, [inView]);
 
   return (
-    <Container>
+    <>
       <SerachFilterPanel
         isFilter
         searchQuery={searchQuery}
@@ -255,34 +255,36 @@ const ProductPageLayout = () => {
         filterHandler={filterHandler}
         placeholder="Search products by name or brand"
       />
-      {loading ? (
-        <WaterDropSpinner />
-      ) : products.length ? (
-        <>
-          <div className="grid-container">
-            {products.map((product) => (
-              <ProductCard
-                key={product._id}
-                offset={offset}
-                setOffest={setOffest}
-                productName={product.productname}
-                description={product.description}
-                brandName={product.brand.brandName}
-                imgUrl={product.imgUrl}
-              />
-            ))}
-          </div>
-
-          <div className="w-full mt-5">
-            <div ref={ref}>
-              {offset < totalProducts ? <div className="loader" /> : ""}
+      <Container>
+        {loading ? (
+          <WaterDropSpinner />
+        ) : products.length ? (
+          <>
+            <div className="grid-container">
+              {products.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  offset={offset}
+                  setOffest={setOffest}
+                  productName={product.productname}
+                  description={product.description}
+                  brandName={product.brand.brandName}
+                  imgUrl={product.imgUrl}
+                />
+              ))}
             </div>
-          </div>
-        </>
-      ) : (
-        <Nodata width={250} />
-      )}
-    </Container>
+
+            <div className="w-full mt-5">
+              <div ref={ref}>
+                {offset < totalProducts ? <div className="loader" /> : ""}
+              </div>
+            </div>
+          </>
+        ) : (
+          <Nodata width={250} />
+        )}
+      </Container>
+    </>
   );
 };
 
