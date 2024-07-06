@@ -2,14 +2,19 @@
 import { TextField } from "@mui/material";
 import { useState } from "react";
 
-export default function SearchField({ searchQuery = "", setSearchQuery = () => { } }) {
+export default function SearchField({
+  searchQuery = "",
+  setSearchQuery = () => {},
+  label = "",
+  placeholder = "",
+}) {
   const [focused, setFocused] = useState(false);
 
   return (
     <TextField
       type="search"
-      label="Search products"
-      placeholder="Name or Brand"
+      label={label}
+      placeholder={placeholder}
       variant="outlined"
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}

@@ -51,7 +51,7 @@
 }
 
 .nav-shadow {
-  box-shadow: 0px 8px 10px -11px rgba(0, 0, 0, 0.41);
+  /* box-shadow: 0px 8px 10px -11px rgba(0, 0, 0, 0.41); */
   position: sticky;
   top: 0%;
   z-index: 10;

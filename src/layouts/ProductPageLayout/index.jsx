@@ -2,10 +2,10 @@
 
 import Container from "@/Components/Container";
 import FilterDrawer from "@/Components/FilterDrawer";
+import Nodata from "@/Components/Nodata";
 import ProductCard from "@/Components/ProductCard";
 import SearchField from "@/Components/SearchField";
 import WaterDropSpinner from "@/Components/WaterDropSpinner";
-import NoData from "@/components/NoData";
 import { getProducts } from "@/utils/callers/products";
 import { MIN_DELAY_TIME, ROWS_PER_PAGE } from "@/utils/constants";
 import { FilterAlt } from "@mui/icons-material";
@@ -260,7 +260,12 @@ const ProductPageLayout = () => {
         >
           Filter
         </Button>
-        <SearchField searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <SearchField
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          label="Search Products"
+          placeholder="Name or brand"
+        />
       </div>
       {loading ? (
         <WaterDropSpinner />
@@ -287,7 +292,7 @@ const ProductPageLayout = () => {
           </div>
         </>
       ) : (
-        <NoData width={250} />
+        <Nodata width={250} />
       )}
     </Container>
   );
