@@ -1,15 +1,13 @@
 "use client";
 
 import Container from "@/Components/Container";
-import FilterDrawer from "@/Components/FilterDrawer";
 import Nodata from "@/Components/Nodata";
 import ProductCard from "@/Components/ProductCard";
-import SearchField from "@/Components/SearchField";
+import SerachFilterPanel from "@/Components/SerachFilterPanel";
 import WaterDropSpinner from "@/Components/WaterDropSpinner";
 import { getProducts } from "@/utils/callers/products";
 import { MIN_DELAY_TIME, ROWS_PER_PAGE } from "@/utils/constants";
-import { FilterAlt } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { useWindowWidth } from "@react-hook/window-size";
 import React, { useState } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -24,6 +22,8 @@ const ProductPageLayout = () => {
   const [alertInfo, setAlertInfo] = React.useState({ type: "", message: "" });
   const [displayAlert, setDisplayAlert] = React.useState(false);
   const { ref, inView } = useInView();
+
+  const screenWidth = useWindowWidth();
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -245,56 +245,46 @@ const ProductPageLayout = () => {
   }, [inView]);
 
   return (
-    <Container>
-      <FilterDrawer
-        open={openFilter}
-        setOpen={setOpenFilter}
-        onFilter={filterHandler}
+    <>
+      <SerachFilterPanel
+        isFilter
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        openFilter={openFilter}
+        setOpenFilter={setOpenFilter}
+        filterHandler={filterHandler}
+        placeholder="Search products by name or brand"
       />
-      <div className="search-div">
-        <Button
-          startIcon={<FilterAlt color="warning" />}
-          className="capitalize"
-          color="warning"
-          onClick={() => setOpenFilter(!openFilter)}
-        >
-          Filter
-        </Button>
-        <SearchField
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          label="Search Products"
-          placeholder="Name or brand"
-        />
-      </div>
-      {loading ? (
-        <WaterDropSpinner />
-      ) : products.length ? (
-        <>
-          <div className="grid-container">
-            {products.map((product) => (
-              <ProductCard
-                key={product._id}
-                offset={offset}
-                setOffest={setOffest}
-                productName={product.productname}
-                description={product.description}
-                brandName={product.brand.brandName}
-                imgUrl={product.imgUrl}
-              />
-            ))}
-          </div>
-
-          <div className="w-full mt-5">
-            <div ref={ref}>
-              {offset < totalProducts ? <div className="loader" /> : ""}
+      <Container>
+        {loading ? (
+          <WaterDropSpinner />
+        ) : products.length ? (
+          <>
+            <div className="grid-container">
+              {products.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  offset={offset}
+                  setOffest={setOffest}
+                  productName={product.productname}
+                  description={product.description}
+                  brandName={product.brand.brandName}
+                  imgUrl={product.imgUrl}
+                />
+              ))}
             </div>
-          </div>
-        </>
-      ) : (
-        <Nodata width={250} />
-      )}
-    </Container>
+
+            <div className="w-full mt-5">
+              <div ref={ref}>
+                {offset < totalProducts ? <div className="loader" /> : ""}
+              </div>
+            </div>
+          </>
+        ) : (
+          <Nodata width={250} />
+        )}
+      </Container>
+    </>
   );
 };
 

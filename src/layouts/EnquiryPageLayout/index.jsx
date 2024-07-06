@@ -2,7 +2,7 @@
 import Container from "@/Components/Container";
 import EnquiryCard from "@/Components/EnquiryCard";
 import Nodata from "@/Components/Nodata";
-import SearchField from "@/Components/SearchField";
+import SerachFilterPanel from "@/Components/SerachFilterPanel";
 import WaterDropSpinner from "@/Components/WaterDropSpinner";
 import { getEnquiriesByUserId } from "@/utils/callers/enquiries";
 import { MIN_DELAY_TIME } from "@/utils/constants";
@@ -71,35 +71,36 @@ const EnquiryPageLayout = () => {
 
   return (
     <Container>
-      <div className="search-div">
-        <span />
-        <SearchField
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          label="Search Enquiry"
-          placeholder="Product name"
-        />
-      </div>
+      <SerachFilterPanel
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        placeholder="Search enquiry by product name"
+      />
       {loading ? (
         <WaterDropSpinner />
       ) : groupedEnquiries.size ? (
         <>
           {[...groupedEnquiries].map(([enquiryOn, enquiries], index) => {
             return (
-              <div style={{ marginBottom: "4rem" }}>
-                <div className="border-b mb-4 flex gap-x-2 text-xs items-center justify-between">
+              <div
+                style={{ marginBottom: "2rem" }}
+                className="p-4 rounded-md bg-gray-50"
+              >
+                <div className="border-b py-4 rounded-md mb-4 flex text-xs items-center justify-between">
                   <div className="flex items-center gap-x-2">
                     <CalendarMonth color="warning" />
                     <p>
                       Enquiry made on{" "}
-                      <b>{new Date(enquiryOn).toLocaleDateString()}</b> at{" "}
-                      <b>{new Date(enquiryOn).toLocaleTimeString()}</b>
+                      <u>{new Date(enquiryOn).toLocaleDateString()}</u> at{" "}
+                      <u>{new Date(enquiryOn).toLocaleTimeString()}</u>
                     </p>
                   </div>
                   <div>
-                    <span className="text-gray-500 text-xs">Total :</span>{" "}
-                    <span className="font-semibold text-orange-700 mono">
-                      ({enquiries.length})
+                    <span
+                      className="font-semibold text-orange-700 mono rounded-full border"
+                      style={{ padding: "2px" }}
+                    >
+                      {enquiries.length}
                     </span>
                   </div>
                 </div>
@@ -113,7 +114,7 @@ const EnquiryPageLayout = () => {
                   ))}
                 </div>
                 {index < groupedEnquiries.size - 1 ? (
-                  <div className=" mt-5" />
+                  <div className="mt-5" />
                 ) : null}
               </div>
             );
