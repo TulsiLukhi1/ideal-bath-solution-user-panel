@@ -6,7 +6,7 @@ const MenuItems = () => {
   const path = usePathname();
 
   return (
-    <div className="p-4">
+    <div className="p-4 md:block hidden">
       <div className="flex gap-x-6 relative">
         {TOPBAR_MENU.map((menuItem) => {
           return (

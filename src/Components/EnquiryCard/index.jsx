@@ -2,14 +2,10 @@ import CutText from "@/Components/CutText";
 import { ContactSupport, Launch } from "@mui/icons-material";
 import Link from "next/link";
 
-const EnquiryCard = ({
-  productId = "",
-  productName = "",
-  brandName = "",
-}) => {
+const EnquiryCard = ({ productId = "", productName = "", brandName = "" }) => {
   return (
     <div
-      className="bg-gradient-to-b from-white via-80% via-gray-100 to-gray-200 rounded-lg shadow w-full hover:shadow-lg"
+      className="border bg-white rounded-md w-full hover:shadow"
       style={{ padding: "1.5rem" }}
     >
       <div>
