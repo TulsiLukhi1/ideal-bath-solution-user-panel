@@ -18,7 +18,7 @@ export const SIDEBAR_MENU = [
 ];
 
 export const MIN_DELAY_TIME = 200;
-export const ROWS_PER_PAGE = 4;
+export const ROWS_PER_PAGE = 12;
 export const getOptions = { cache: "no-cache" };
 
 export const profile = {

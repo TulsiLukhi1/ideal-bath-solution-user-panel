@@ -45,7 +45,7 @@ export default function ProductCard({
   }
 
   return (
-    <>
+    <div>
       <Notification
         message={notificationInfo.message}
         open={openNotification}
@@ -112,6 +112,6 @@ export default function ProductCard({
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
