@@ -17,7 +17,9 @@ export default function SerachFilterPanel({
 
   return (
     <div
-      className={`py-2 mb-5 w-full  ${screenWidth < 768 ? "filter-panel" : ""}`}
+      className={`py-2 mb-5 w-full filter-panel  ${
+        screenWidth < 768 ? "filter-panel" : ""
+      }`}
     >
       <div
         className={`flex relative justify-between items-end mt-auto sm:mx-12 mx-4`}
