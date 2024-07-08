@@ -44,7 +44,7 @@ export default function FilterDrawer({
       status,
     } = await getBrands("/brands", 0, ROWS_PER_PAGE);
 
-    // sucess status code is 2xx
+    // success status code is 2xx
     if (status >= 200 && status < 300) {
       setBrands(brands);
       setTotalBrands(total);
@@ -85,22 +85,23 @@ export default function FilterDrawer({
   }
 
   return (
-    <>
-      <Drawer
-        size="md"
-        anchor="top"
-        open={open}
-        onClose={() => setOpen(false)}
-        slotProps={{
-          content: {
-            sx: {
-              bgcolor: "transparent",
-              p: { md: 3, sm: 0 },
-              boxShadow: "none",
-            },
+    <Drawer
+      size="md"
+      anchor="top"
+      open={open}
+      onClose={() => setOpen(false)}
+      slotProps={{
+        content: {
+          sx: {
+            bgcolor: "transparent",
+            p: { md: 3, sm: 0 },
+            boxShadow: "none",
+            height: "100%",
           },
-        }}
-      >
+        },
+      }}
+    >
+      <div className="filter-drawer">
         <Sheet
           sx={{
             borderRadius: "md",
@@ -108,8 +109,7 @@ export default function FilterDrawer({
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            maxHeight: "100%",
-            overflowY: "auto",
+            height: "100%",
           }}
         >
           <DialogTitle>
@@ -143,36 +143,41 @@ export default function FilterDrawer({
           </DialogContent>
           <Divider sx={{ mt: "auto" }} />
           <Stack
-            direction="row"
+            direction={{ xs: "row", sm: "row" }} // Flex direction based on screen size
             justifyContent="flex-start"
+            alignItems="center"
             useFlexGap
             spacing={1}
           >
             <Button
               variant="outlined"
               color="neutral"
-              size="lg"
+              size="sm"
               onClick={() => {
                 setSelectedBrands([]);
               }}
-              sx={{ borderRadius: "2px" }}
+              sx={{
+                borderRadius: "2px",
+                mb: { xs: 0, sm: 0 },
+                fontSize: ".8rem",
+              }} // Adjust margin based on screen size
               disabled={!selectedBrands.length}
             >
-              Clear <FilterAltOff />
+              Clear <FilterAltOff fontSize="small" />
             </Button>
             <Button
               onClick={filterHandler}
-              size="lg"
+              size="sm"
               color="warning"
               variant="plain"
-              sx={{ borderRadius: "2px" }}
+              sx={{ borderRadius: "2px", fontSize: ".8rem" }}
             >
-              Apply <FilterAlt />
+              Apply <FilterAlt fontSize="small" />
             </Button>
           </Stack>
         </Sheet>
-      </Drawer>
-    </>
+      </div>
+    </Drawer>
   );
 }
 
@@ -188,49 +193,60 @@ function BrandList({
       sx={{
         "--List-gap": "12px",
         "--ListItem-radius": "20px",
+        display: "flex",
+        justifyContent: "flex-start",
+        flexWrap: "wrap", // Enable flex wrapping
+        gap: "12px",
+        marginBlock: "10px",
       }}
     >
       {brands.map((brand) => {
         const selected = selectedBrands.includes(brand._id);
         return (
-          <ListItem key={brand._id}>
-            <AspectRatio
-              variant={selected ? "solid" : "outlined"}
-              color={selected ? "primary" : "neutral"}
-              ratio={1}
-              sx={{ width: 20, borderRadius: 20, ml: -0.5, mr: 0.75 }}
+          <div>
+            <ListItem
+              key={brand._id}
+              sx={{ minWidth: { xs: "100%", sm: "50%" } }}
             >
-              <div>{selected && <Done fontSize="md" />}</div>
-            </AspectRatio>
-            <Checkbox
-              size="sm"
-              color="neutral"
-              disableIcon
-              overlay
-              label={brand.brandName}
-              variant="outlined"
-              checked={selected}
-              onChange={(event) =>
-                setSelectedBrands((prev) => {
-                  const set = new Set([...prev, brand._id]);
-                  if (!event.target.checked) {
-                    set.delete(brand._id);
-                  }
+              <AspectRatio
+                variant={selected ? "solid" : "outlined"}
+                color={selected ? "primary" : "neutral"}
+                ratio={1}
+                sx={{ width: 17, borderRadius: 20 }}
+              >
+                <div>{selected && <Done fontSize="md" />}</div>
+              </AspectRatio>
+              <Checkbox
+                size="sm"
+                color="neutral"
+                disableIcon
+                overlay
+                label={brand.brandName}
+                className="filter-option-text"
+                variant="outlined"
+                checked={selected}
+                onChange={(event) =>
+                  setSelectedBrands((prev) => {
+                    const set = new Set([...prev, brand._id]);
+                    if (!event.target.checked) {
+                      set.delete(brand._id);
+                    }
 
-                  return [...set];
-                })
-              }
-              slotProps={{
-                action: {
-                  sx: {
-                    "&:hover": {
-                      bgcolor: "transparent",
+                    return [...set];
+                  })
+                }
+                slotProps={{
+                  action: {
+                    sx: {
+                      "&:hover": {
+                        bgcolor: "transparent",
+                      },
                     },
                   },
-                },
-              }}
-            />
-          </ListItem>
+                }}
+              />
+            </ListItem>
+          </div>
         );
       })}
     </List>
