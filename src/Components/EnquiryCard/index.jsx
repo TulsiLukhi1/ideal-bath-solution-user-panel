@@ -1,11 +1,24 @@
 import CutText from "@/Components/CutText";
 import { ContactSupport, Launch } from "@mui/icons-material";
 import Link from "next/link";
+import React from "react";
 
 const EnquiryCard = ({ productId = "", productName = "", brandName = "" }) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 100); // Delay to trigger the animation smoothly
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <div
-      className="border bg-white rounded-md w-full hover:shadow"
+      className={`border bg-white rounded-md w-full hover:shadow transition-transform duration-500 ease-in-out transform ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
       style={{ padding: "1.5rem" }}
     >
       <div>
