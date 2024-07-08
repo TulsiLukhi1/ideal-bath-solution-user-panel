@@ -9,14 +9,6 @@ import CutText from "../CutText";
 import Notification from "../Notification";
 import QuantityInput from "../QuantityInput";
 
-const item = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-  },
-};
-
 export default function ProductCard({
   productId = "",
   productName = "",

@@ -1,14 +1,13 @@
-import TopBar from '@/Components/TopBar';
+import TopBar from "@/Components/TopBar";
 
 const MainLayout = ({ children }) => {
-
   return (
-    <>
-      <div className='nav-shadow'>
+    <div className="main-layout">
+      <div className="nav-shadow">
         <TopBar />
       </div>
-      {children}
-    </>
+      <div className="children-div">{children}</div>
+    </div>
   );
 };
 

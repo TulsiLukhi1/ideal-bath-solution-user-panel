@@ -6,7 +6,7 @@ import MenuItems from "../MenuItems";
 
 const TopBar = () => {
   return (
-    <div className="flex justify-between items-center py-2 sm:mx-12 mx-4">
+    <div className="flex justify-between items-center py-2 sm:mx-12 mx-4 h-full">
       <Hamburger />
       <Logo />
       <MenuItems />

@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const Logo = ({ fixedWidth = 0, className = "" }) => {
   const screenWidth = useWindowWidth();
-  const logoWidth = screenWidth >= 768 ? 120 : screenWidth >= 568 ? 100 : 70;
+  const logoWidth = screenWidth > 768 ? 120 : 70;
   return (
     <div className="rounded-xl image-container">
       <Image
