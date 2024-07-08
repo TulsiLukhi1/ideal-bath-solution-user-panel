@@ -1,15 +1,32 @@
-"use client"
+"use client";
 
-import { usePathname } from 'next/navigation';
-import MainLayout from '../MainLayout';
+import SplashScreen from "@/Components/SplashScreen";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import MainLayout from "../MainLayout";
 
 const LayoutWrapper = ({ children }) => {
-    const pathname = usePathname();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [isLoading, setIsLoading] = useState(isHome);
 
-    const pages = ["/", "/enquiries", "/products", "/users"];
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+  }, [isLoading]);
 
-    return <MainLayout>{children}</MainLayout>
+  return (
+    <div className="layout-wrapper">
+      {isLoading && isHome ? (
+        <div className="splash-screen-div">
+          <SplashScreen finishLoading={() => setIsLoading(false)} />
+        </div>
+      ) : (
+        <MainLayout>{children}</MainLayout>
+      )}
+    </div>
+  );
+};
 
-}
-
-export default LayoutWrapper
+export default LayoutWrapper;

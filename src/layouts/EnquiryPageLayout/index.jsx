@@ -3,9 +3,8 @@ import Container from "@/Components/Container";
 import EnquiryCard from "@/Components/EnquiryCard";
 import Nodata from "@/Components/Nodata";
 import SerachFilterPanel from "@/Components/SerachFilterPanel";
-import WaterDropSpinner from "@/Components/WaterDropSpinner";
+import Loader from "@/Components/Spinner";
 import { getEnquiriesByUserId } from "@/utils/callers/enquiries";
-import { MIN_DELAY_TIME } from "@/utils/constants";
 import { groupEnquiriesByDate } from "@/utils/Helpers/groupEnquiriesByDate";
 import { CalendarMonth } from "@mui/icons-material";
 import React from "react";
@@ -33,12 +32,10 @@ const EnquiryPageLayout = () => {
 
     // sucess status code is 2xx
     if (status >= 200 && status < 300) {
-      setTimeout(() => {
-        setEnquiries(enquiries);
-        setGroupedEnquiries(groupEnquiriesByDate(enquiries));
-        setTotalEnquiries(total);
-        setLoading(false);
-      }, MIN_DELAY_TIME);
+      setEnquiries(enquiries);
+      setGroupedEnquiries(groupEnquiriesByDate(enquiries));
+      setTotalEnquiries(total);
+      setLoading(false);
     }
 
     // client error status code is 4xx
@@ -77,7 +74,7 @@ const EnquiryPageLayout = () => {
         placeholder="Search enquiry by product name"
       />
       {loading ? (
-        <WaterDropSpinner />
+        <Loader />
       ) : groupedEnquiries.size ? (
         <>
           {[...groupedEnquiries].map(([enquiryOn, enquiries], index) => {

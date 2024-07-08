@@ -8,9 +8,13 @@ import Drawer from "@mui/joy/Drawer";
 import ModalClose from "@mui/joy/ModalClose";
 import Typography from "@mui/joy/Typography";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import * as React from "react";
 
 export default function Sidebar({ open = false, setOpen = () => {} }) {
+  const pathname = usePathname();
+  const isActive = (curr) => pathname === curr;
+
   return (
     <React.Fragment>
       <Drawer open={open} onClose={() => setOpen(false)}>
@@ -33,13 +37,21 @@ export default function Sidebar({ open = false, setOpen = () => {} }) {
               {TOPBAR_MENU.map((menuItem) => {
                 return (
                   <Link
-                  key={menuItem.href}
+                    key={menuItem.href}
                     href={menuItem.href}
-                    className="text-sm uppercase px-5 py-2 flex justify-between items-center gap-x-3 border-b"
+                    className={`text-sm uppercase px-5 py-2 flex justify-between items-center gap-x-3 border-b ${
+                      isActive(menuItem.href) ? "bg-[#c78022] text-white" : ""
+                    }`}
                     onClick={() => setOpen(false)}
                   >
                     <p className="text-[13px] font-medium">{menuItem.label}</p>
-                    <p className="text-gray-500">{menuItem.icon}</p>
+                    <p
+                      className={`${
+                        isActive(menuItem.href) ? "text-white" : "text-gray-500"
+                      }`}
+                    >
+                      {menuItem.icon}
+                    </p>
                   </Link>
                 );
               })}
