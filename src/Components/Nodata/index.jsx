@@ -8,7 +8,7 @@ const NoData = ({ className, width = 50, height }) => {
     >
       <Image src={ImageNoData} alt="loading" width={width} height={height} />
     </div>
-  );
+  ); 
 };
 
 export default NoData;
