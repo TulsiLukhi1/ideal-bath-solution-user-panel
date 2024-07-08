@@ -1,21 +1,57 @@
-import { NO_IMAGE } from "@/utils/constants";
+import { NO_IMAGE, profile } from "@/utils/constants";
+import { sendWhatsappMsg } from "@/utils/Helpers/sendWhatsappMsg";
+import { whMsg } from "@/utils/Helpers/whMsg";
 import CategoryIcon from "@mui/icons-material/Category";
 import { Tooltip } from "@mui/joy";
 import * as React from "react";
 import CutText from "../CutText";
+import Notification from "../Notification";
 import QuantityInput from "../QuantityInput";
 
 export default function ProductCard({
+  productId = "",
   productName = "",
   brandName = "",
   description = "",
   imgUrl = "",
+  wh_token = "",
+  wh_url = "",
+  wh_number_to = "",
 }) {
   const [quantity, setQuantity] = React.useState(1);
+  const [openNotification, setOpenNotification] = React.useState(false);
+  const [notificationInfo, setNotificationInfo] = React.useState({
+    type: "success",
+    message: "",
+  });
+
+  async function enquirySender() {
+    const url = process.env.NEXT_PUBLIC_DOMAIN;
+    const msg = whMsg(
+      productName,
+      brandName,
+      quantity,
+      `${url}/products/${productId}`,
+      profile.userName,
+      profile.mobileNumber
+    );
+    await sendWhatsappMsg(wh_token, wh_url, wh_number_to, msg);
+    setOpenNotification(true);
+    setNotificationInfo({
+      type: "success",
+      message: "Enquiry sent",
+    });
+  }
 
   return (
     <div className="w-full relative flex flex-col gap-y-2 overflow-hidden bg-gray-50 rounded-md transition-shadow duration-300 hover:shadow-xl">
       {/* Body */}
+      <Notification
+        message={notificationInfo.message}
+        open={openNotification}
+        setOpen={setOpenNotification}
+        type={notificationInfo.type}
+      />
       <Tooltip title={brandName} color="primary" arrow placement="left">
         <CategoryIcon
           fontSize="small"
@@ -55,6 +91,7 @@ export default function ProductCard({
           </CutText>
         </div>
       </div>
+
       {/* Footer */}
       <div className="flex justify-between items-center sm:px-6 px-4 pt-2 pb-4 mt-auto">
         <QuantityInput
@@ -67,6 +104,7 @@ export default function ProductCard({
         <button
           variant="outlined"
           className="text-orange-600 font-medium sm:text-base text-sm shadow bg-white bg-opacity-10 hover:bg-opacity-100 px-4 py-2"
+          onClick={enquirySender}
         >
           Do Enquiry
         </button>

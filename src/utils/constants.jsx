@@ -3,7 +3,6 @@ import { HelpCenter, Inventory } from "@mui/icons-material";
 
 export const NO_IMAGE = process.env.NEXT_PUBLIC_NO_IMAGE;
 
-
 export const TOPBAR_MENU = [
   { label: "Products", href: "/", icon: <Inventory fontSize="small" /> },
   {
@@ -24,6 +23,6 @@ export const getOptions = { cache: "no-cache" };
 
 export const profile = {
   userName: "John Duo",
-  mobileNumber: "+91 98763 89137",
+  mobileNumber: "9876389137",
   imgUrl: ProfileImage,
 };
