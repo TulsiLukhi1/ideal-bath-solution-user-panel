@@ -11,7 +11,11 @@ import { useWindowWidth } from "@react-hook/window-size";
 import React, { useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-const ProductPageLayout = () => {
+const ProductPageLayout = ({
+  wh_url = "",
+  wh_token = "",
+  wh_number_to = "",
+}) => {
   const [products, setProducts] = React.useState([]);
   const [selectedBrands, setSelectedBrands] = React.useState([]);
   const [offset, setOffest] = React.useState(0);
@@ -266,17 +270,25 @@ const ProductPageLayout = () => {
                   key={product._id}
                   offset={offset}
                   setOffest={setOffest}
+                  productId={product._id}
                   productName={product.productname}
                   description={product.description}
                   brandName={product.brand.brandName}
                   imgUrl={product.imgUrl}
+                  wh_token={wh_token}
+                  wh_url={wh_url}
+                  wh_number_to={wh_number_to}
                 />
               ))}
             </div>
 
             <div className="w-full mt-5">
               <div ref={ref}>
-                {offset < totalProducts ? <div className="content-loader" /> : ""}
+                {offset < totalProducts ? (
+                  <div className="content-loader" />
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </>
