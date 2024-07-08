@@ -8,7 +8,6 @@ import * as React from "react";
 import CutText from "../CutText";
 import Notification from "../Notification";
 import QuantityInput from "../QuantityInput";
-import { motion } from "framer-motion";
 
 const item = {
   hidden: { y: 20, opacity: 0 },
