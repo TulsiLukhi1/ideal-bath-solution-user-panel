@@ -67,60 +67,62 @@ const EnquiryPageLayout = () => {
   }, [searchQuery]);
 
   return (
-    <Container>
+    <>
       <SerachFilterPanel
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         placeholder="Search enquiry by product name"
       />
-      {loading ? (
-        <Loader />
-      ) : groupedEnquiries.size ? (
-        <>
-          {[...groupedEnquiries].map(([enquiryOn, enquiries], index) => {
-            return (
-              <div
-                style={{ marginBottom: "2rem", background: "#f9fafb" }}
-                className="p-4 rounded-md"
-              >
-                <div className="py-4 rounded-md mb-4 flex text-xs items-center justify-between">
-                  <div className="flex items-center gap-x-2">
-                    <CalendarMonth color="warning" />
-                    <p>
-                      Enquiry made on{" "}
-                      <u>{new Date(enquiryOn).toLocaleDateString()}</u> at{" "}
-                      <u>{new Date(enquiryOn).toLocaleTimeString()}</u>
-                    </p>
+      <Container>
+        {loading ? (
+          <Loader />
+        ) : groupedEnquiries.size ? (
+          <>
+            {[...groupedEnquiries].map(([enquiryOn, enquiries], index) => {
+              return (
+                <div
+                  style={{ marginBottom: "2rem", background: "#f9fafb" }}
+                  className="p-4 rounded-md"
+                >
+                  <div className="py-4 rounded-md mb-4 flex text-xs items-center justify-between">
+                    <div className="flex items-center gap-x-2">
+                      <CalendarMonth color="warning" />
+                      <p>
+                        Enquiry made on{" "}
+                        <u>{new Date(enquiryOn).toLocaleDateString()}</u> at{" "}
+                        <u>{new Date(enquiryOn).toLocaleTimeString()}</u>
+                      </p>
+                    </div>
+                    <div>
+                      <span
+                        className="font-semibold text-orange-700 mono rounded-full border"
+                        style={{ padding: "2px" }}
+                      >
+                        {enquiries.length}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <span
-                      className="font-semibold text-orange-700 mono rounded-full border"
-                      style={{ padding: "2px" }}
-                    >
-                      {enquiries.length}
-                    </span>
+                  <div className="grid-container">
+                    {enquiries.map((enquiry) => (
+                      <EnquiryCard
+                        brandName={enquiry.product.brand.brandName}
+                        productId={enquiry.product._id}
+                        productName={enquiry.product.productname}
+                      />
+                    ))}
                   </div>
+                  {index < groupedEnquiries.size - 1 ? (
+                    <div className="mt-5" />
+                  ) : null}
                 </div>
-                <div className="grid-container">
-                  {enquiries.map((enquiry) => (
-                    <EnquiryCard
-                      brandName={enquiry.product.brand.brandName}
-                      productId={enquiry.product._id}
-                      productName={enquiry.product.productname}
-                    />
-                  ))}
-                </div>
-                {index < groupedEnquiries.size - 1 ? (
-                  <div className="mt-5" />
-                ) : null}
-              </div>
-            );
-          })}
-        </>
-      ) : (
-        <Nodata width={250} />
-      )}
-    </Container>
+              );
+            })}
+          </>
+        ) : (
+          <Nodata width={250} />
+        )}
+      </Container>
+    </>
   );
 };
 
