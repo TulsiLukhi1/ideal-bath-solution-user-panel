@@ -8,7 +8,7 @@ import { getEnquiriesByUserId } from "@/utils/callers/enquiries";
 import { groupEnquiriesByDate } from "@/utils/Helpers/groupEnquiriesByDate";
 import { CalendarMonth } from "@mui/icons-material";
 import React from "react";
-
+ 
 const EnquiryPageLayout = () => {
   const [enquiries, setEnquiries] = React.useState([]);
   const [totalEnquiries, setTotalEnquiries] = React.useState(0);
