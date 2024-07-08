@@ -8,6 +8,15 @@ import * as React from "react";
 import CutText from "../CutText";
 import Notification from "../Notification";
 import QuantityInput from "../QuantityInput";
+import { motion } from "framer-motion";
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+};
 
 export default function ProductCard({
   productId = "",
@@ -25,6 +34,16 @@ export default function ProductCard({
     type: "success",
     message: "",
   });
+
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 100); // Delay to trigger the animation smoothly
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   async function enquirySender() {
     const url = process.env.NEXT_PUBLIC_DOMAIN;
@@ -72,7 +91,11 @@ export default function ProductCard({
   }
 
   return (
-    <div>
+    <div
+      className={`transition-transform duration-500 ease-in-out transform ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
       <Notification
         message={notificationInfo.message}
         open={openNotification}
