@@ -203,11 +203,8 @@ function BrandList({
       {brands.map((brand) => {
         const selected = selectedBrands.includes(brand._id);
         return (
-          <div>
-            <ListItem
-              key={brand._id}
-              sx={{ minWidth: { xs: "100%", sm: "50%" } }}
-            >
+          <div key={brand._id}>
+            <ListItem sx={{ minWidth: { xs: "100%", sm: "50%" } }}>
               <AspectRatio
                 variant={selected ? "solid" : "outlined"}
                 color={selected ? "primary" : "neutral"}
