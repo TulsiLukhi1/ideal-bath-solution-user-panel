@@ -76,7 +76,8 @@ const EnquiryPageLayout = () => {
       <Container>
         {loading ? (
           <Loader />
-        ) : groupedEnquiries.size ? (
+        ) : groupedEnquiries.size ? 
+        (
           <>
             {[...groupedEnquiries].map(([enquiryOn, enquiries], index) => {
               return (
