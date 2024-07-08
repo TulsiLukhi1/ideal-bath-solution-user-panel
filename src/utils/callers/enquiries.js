@@ -1,4 +1,5 @@
-const { getOptions } = require("../constants");
+import { FetchError } from "@/class/FetchError";
+import { getOptions, postOptions } from "@/utils/constants";
 
 export async function getEnquiriesByUserId(apiEndPoint, query) {
   try {
@@ -15,13 +16,37 @@ export async function getEnquiriesByUserId(apiEndPoint, query) {
     });
     const data = await response.json();
     if (!response.ok) {
-      return { ...data, status: response.status };
+      throw new FetchError(data.errorMessage, response.status);
     }
     return { ...data, status: response.status };
   } catch (error) {
     return {
-      errorMessage: "Product's session can't store !",
-      status: 400,
+      errorMessage: error.message,
+      status: error.status ? error.status : 400,
+    };
+  }
+}
+
+export async function createEnquiry(apiEndPoint, body) {
+  try {
+    const options = {
+      ...postOptions,
+      body: JSON.stringify(body),
+    };
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || null}/api/${apiEndPoint}`,
+      options
+    );
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new FetchError(data.errorMessage, response.status);
+    }
+    return { ...data, status: response.status };
+  } catch (error) {
+    return {
+      errorMessage: error.message,
+      status: error.status ? error.status : 400,
     };
   }
 }

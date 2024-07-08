@@ -1,4 +1,5 @@
-const { getOptions, ROWS_PER_PAGE } = require("../constants");
+import { FetchError } from "@/class/FetchError";
+import { getOptions } from "@/utils/constants";
 
 export async function getProducts(
   apiEndPoint,
@@ -22,13 +23,13 @@ export async function getProducts(
     });
     const data = await response.json();
     if (!response.ok) {
-      return { ...data, status: response.status };
+      throw new FetchError(data.errorMessage, response.status);
     }
     return { ...data, status: response.status };
   } catch (error) {
     return {
-      errorMessage: "Product's session can't store !",
-      status: 400,
+      errorMessage: error.message,
+      status: error.status ? error.status : 400,
     };
   }
 }
