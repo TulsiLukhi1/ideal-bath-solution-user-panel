@@ -83,6 +83,7 @@ const EnquiryPageLayout = () => {
                 <div
                   style={{ marginBottom: "2rem", background: "#f9fafb" }}
                   className="p-4 rounded-md"
+                  key={index}
                 >
                   <div className="py-4 rounded-md mb-4 flex text-xs items-center justify-between">
                     <div className="flex items-center gap-x-2">
@@ -105,6 +106,7 @@ const EnquiryPageLayout = () => {
                   <div className="grid-container">
                     {enquiries.map((enquiry) => (
                       <EnquiryCard
+                        key={enquiry._id}
                         brandName={enquiry.product.brand.brandName}
                         productId={enquiry.product._id}
                         productName={enquiry.product.productname}
