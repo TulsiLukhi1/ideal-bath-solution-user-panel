@@ -17,6 +17,15 @@ body {
   gap: 20px;
 }
 
+.filter-drawer {
+  min-height: fit-content;
+  max-height: 100vh !important;
+}
+
+.filter-option-text {
+  font-size: 0.8rem !important;
+}
+
 @media (max-width: 1440px) {
   .grid-container {
     grid-template-columns: repeat(3, 1fr);
@@ -38,6 +47,9 @@ body {
   }
   .search-div {
     margin-bottom: 24px !important;
+  }
+  .filter-drawer {
+    min-height: 100vh !important;
   }
 }
 
@@ -195,7 +207,6 @@ body {
 .drop-outer {
   position: absolute;
   box-sizing: border-box;
-  /* border: 1px solid #333; */
   width: 100px;
   height: 200px;
   overflow: hidden;
