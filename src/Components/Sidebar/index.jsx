@@ -1,11 +1,10 @@
 "use client";
 
 import { TOPBAR_MENU } from "@/utils/constants";
-import { Logout } from "@mui/icons-material";
+import { Logout, MenuOpen } from "@mui/icons-material";
 import { Avatar, DialogContent } from "@mui/joy";
 import Box from "@mui/joy/Box";
 import Drawer from "@mui/joy/Drawer";
-import ModalClose from "@mui/joy/ModalClose";
 import Typography from "@mui/joy/Typography";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,12 +23,13 @@ export default function Sidebar({ open = false, setOpen = () => {} }) {
               display: "flex",
               alignItems: "center",
               gap: 0.5,
-              ml: "auto",
-              mt: 1,
-              mr: 2,
+              my: 1,
+              ml: 2,
             }}
           >
-            <ModalClose id="close-icon" sx={{ position: "initial" }} />
+            <span onClick={() => setOpen(false)}>
+              <MenuOpen color="action" />
+            </span>
           </Box>
 
           <div>
@@ -57,7 +57,9 @@ export default function Sidebar({ open = false, setOpen = () => {} }) {
               })}
               <li className="text-sm uppercase px-5 py-2 flex justify-between items-center gap-x-3 border-b">
                 <p className="text-[13px] font-medium">Logout</p>
-                <p className="text-orange-500">{<Logout color="error" />}</p>
+                <p className="text-orange-500">
+                  {<Logout color="error" fontSize="small" />}
+                </p>
               </li>
             </ul>
           </div>
