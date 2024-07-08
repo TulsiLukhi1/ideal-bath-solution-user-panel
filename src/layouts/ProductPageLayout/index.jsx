@@ -4,7 +4,7 @@ import Container from "@/Components/Container";
 import Nodata from "@/Components/Nodata";
 import ProductCard from "@/Components/ProductCard";
 import SerachFilterPanel from "@/Components/SerachFilterPanel";
-import WaterDropSpinner from "@/Components/WaterDropSpinner";
+import Loader from "@/Components/Spinner";
 import { getProducts } from "@/utils/callers/products";
 import { MIN_DELAY_TIME, ROWS_PER_PAGE } from "@/utils/constants";
 import { useWindowWidth } from "@react-hook/window-size";
@@ -257,7 +257,7 @@ const ProductPageLayout = () => {
       />
       <Container>
         {loading ? (
-          <WaterDropSpinner />
+          <Loader />
         ) : products.length ? (
           <>
             <div className="grid-container">
@@ -276,7 +276,7 @@ const ProductPageLayout = () => {
 
             <div className="w-full mt-5">
               <div ref={ref}>
-                {offset < totalProducts ? <div className="loader" /> : ""}
+                {offset < totalProducts ? <div className="content-loader" /> : ""}
               </div>
             </div>
           </>

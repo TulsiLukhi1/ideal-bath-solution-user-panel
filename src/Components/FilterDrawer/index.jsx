@@ -1,6 +1,6 @@
 import BrandSkeleton from "@/skeletons/BrandSkeleton";
 import { getBrands } from "@/utils/callers/brands";
-import { MIN_DELAY_TIME, ROWS_PER_PAGE } from "@/utils/constants";
+import { ROWS_PER_PAGE } from "@/utils/constants";
 import {
   Category,
   FilterAlt,
@@ -46,11 +46,9 @@ export default function FilterDrawer({
 
     // sucess status code is 2xx
     if (status >= 200 && status < 300) {
-      setTimeout(() => {
-        setBrands(brands);
-        setTotalBrands(total);
-        setLoading(false);
-      }, MIN_DELAY_TIME);
+      setBrands(brands);
+      setTotalBrands(total);
+      setLoading(false);
     }
 
     // client error status code is 4xx
