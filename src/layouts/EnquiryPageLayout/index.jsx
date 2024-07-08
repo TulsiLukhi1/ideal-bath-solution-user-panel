@@ -80,8 +80,8 @@ const EnquiryPageLayout = () => {
           {[...groupedEnquiries].map(([enquiryOn, enquiries], index) => {
             return (
               <div
-                style={{ marginBottom: "2rem" }}
-                className="p-4 rounded-md bg-gray-50"
+                style={{ marginBottom: "2rem", background: "#f9fafb" }}
+                className="p-4 rounded-md"
               >
                 <div className="py-4 rounded-md mb-4 flex text-xs items-center justify-between">
                   <div className="flex items-center gap-x-2">

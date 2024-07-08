@@ -1,3 +1,4 @@
+import { createEnquiry } from "@/utils/callers/enquiries";
 import { NO_IMAGE, profile } from "@/utils/constants";
 import { sendWhatsappMsg } from "@/utils/Helpers/sendWhatsappMsg";
 import { whMsg } from "@/utils/Helpers/whMsg";
@@ -32,16 +33,42 @@ export default function ProductCard({
       brandName,
       quantity,
       `${url}/products/${productId}`,
+      profile.mobileNumber,
       profile.userName,
-      profile.mobileNumber
+      profile.createdAt
     );
-    await sendWhatsappMsg(wh_token, wh_url, wh_number_to, msg);
-    setOpenNotification(true);
-    setNotificationInfo({
-      type: "success",
-      message: "Enquiry sent",
-    });
-    setQuantity(1);
+
+    const result = await createEnquiry("enquiries", [
+      { user: profile._id, product: productId },
+    ]);
+
+    // sucess status code is 2xx
+    if (result.status >= 200 && result.status < 300) {
+      await sendWhatsappMsg(wh_token, wh_url, wh_number_to, msg);
+      setOpenNotification(true);
+      setNotificationInfo({
+        type: "success",
+        message: "Enquiry sent",
+      });
+      setQuantity(1);
+    }
+
+    // client error status code is 4xx
+    if (result.status >= 400 && result.status < 500) {
+      setOpenNotification(true);
+      setNotificationInfo({ type: "error", message: `${result.errorMessage}` });
+      return;
+    }
+
+    // server error status code is 5xx
+    if (result.status >= 500 && result.status < 600) {
+      setOpenNotification(true);
+      setNotificationInfo({
+        type: "error",
+        message: `Error : ${result.errorMessage}`,
+      });
+      return;
+    }
   }
 
   return (
@@ -52,7 +79,7 @@ export default function ProductCard({
         setOpen={setOpenNotification}
         type={notificationInfo.type}
       />
-      <div className="w-full relative flex flex-col gap-y-2 overflow-hidden bg-gray-50 rounded-md transition-shadow duration-300 hover:shadow-xl">
+      <div className="w-full relative flex flex-col gap-y-2 overflow-hidden shadow rounded-md transition-shadow duration-300 hover:shadow-xl">
         {/* Body */}
         <Tooltip title={brandName} color="primary" arrow placement="left">
           <CategoryIcon
@@ -105,7 +132,7 @@ export default function ProductCard({
           />
           <button
             variant="outlined"
-            className="text-orange-600 font-medium sm:text-base text-sm shadow bg-white bg-opacity-10 hover:bg-opacity-100 px-4 py-2"
+            className="enquiry-btn-grad"
             onClick={enquirySender}
           >
             Do Enquiry
