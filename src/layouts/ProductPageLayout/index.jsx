@@ -237,11 +237,7 @@ const ProductPageLayout = ({
   }, []);
 
   React.useEffect(() => {
-    searchProducts();
-  }, [searchQuery]);
-
-  React.useEffect(() => {
-    searchProducts();
+    if (searchQuery) searchProducts();
   }, [searchQuery]);
 
   React.useEffect(() => {
