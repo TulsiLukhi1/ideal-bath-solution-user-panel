@@ -9,6 +9,8 @@ import CutText from "../CutText";
 import Notification from "../Notification";
 import QuantityInput from "../QuantityInput";
 
+import { useRouter } from "next/navigation";
+
 export default function ProductCard({
   productId = "",
   productName = "",
@@ -18,6 +20,7 @@ export default function ProductCard({
   wh_token = "",
   wh_url = "",
   wh_number_to = "",
+  showFooter = true,
 }) {
   const [quantity, setQuantity] = React.useState(1);
   const [openNotification, setOpenNotification] = React.useState(false);
@@ -27,11 +30,12 @@ export default function ProductCard({
   });
 
   const [isVisible, setIsVisible] = React.useState(false);
+  const router = useRouter();
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       setIsVisible(true);
-    }, 100); // Delay to trigger the animation smoothly
+    }, 100);
 
     return () => clearTimeout(timeout);
   }, []);
@@ -52,7 +56,7 @@ export default function ProductCard({
       { user: profile._id, product: productId },
     ]);
 
-    // sucess status code is 2xx
+    // success status code is 2xx
     if (result.status >= 200 && result.status < 300) {
       await sendWhatsappMsg(wh_token, wh_url, wh_number_to, msg);
       setOpenNotification(true);
@@ -81,6 +85,15 @@ export default function ProductCard({
     }
   }
 
+  function handleCardClick() {
+    router.push(`/product/${productId}`);
+  }
+
+  function handleQuantityChange(e, value) {
+    e.stopPropagation(); // Prevents event bubbling
+    setQuantity(value);
+  }
+
   return (
     <div
       className={`transition-transform duration-500 ease-in-out transform ${
@@ -102,7 +115,7 @@ export default function ProductCard({
             className=" absolute right-2 top-2 shadow-lg rounded-full w-7 p-[.2rem]"
           />
         </Tooltip>
-        <div>
+        <div onClick={handleCardClick}>
           <img
             className="w-full h-48 object-cover rounded-md mb-4"
             src={imgUrl || NO_IMAGE}
@@ -111,20 +124,12 @@ export default function ProductCard({
         </div>
         <div className="flex flex-col h-full">
           <div className="flex flex-col justify-between items-start sm:px-6 px-4 py-2">
-            {/* <div className="text-gray-600 sm:text-sm text-xs font-medium flex gap-x-2 justify-start items-center">
-            <CategoryIcon
-              fontSize="small"
-              color="primary"
-              className=" absolute shadow-lg rounded-full w-7 p-[.2rem]"
-            />
-            <CutText className="liner-1">{brandName}</CutText>
-          </div> */}
             <div className="font-semibold sm:text-lg text-base mb-1 capitalize">
               {" "}
               <CutText className="liner-1">{productName}</CutText>
             </div>
           </div>
-          <div className="text-gray-700 sm:text-sm mt-auto text-xs sm:px-6 px-4">
+          <div className="text-gray-700 sm:text-sm mt-auto text-xs sm:px-6 px-4 mb-4">
             <CutText className="liner-2">
               {description ? (
                 description
@@ -136,22 +141,24 @@ export default function ProductCard({
         </div>
 
         {/* Footer */}
-        <div className="flex justify-between items-center sm:px-6 px-4 pt-2 pb-4 mt-auto">
-          <QuantityInput
-            value={quantity}
-            label="Page no."
-            min={1}
-            decrementDisabled={quantity === 1}
-            onChange={(e, value) => setQuantity(value)}
-          />
-          <button
-            variant="outlined"
-            className="enquiry-btn-grad"
-            onClick={enquirySender}
-          >
-            Do Enquiry
-          </button>
-        </div>
+        {showFooter && (
+          <div className="flex justify-between items-center sm:px-6 px-4 pt-2 pb-4 mt-auto">
+            <QuantityInput
+              value={quantity}
+              label="Page no."
+              min={1}
+              decrementDisabled={quantity === 1}
+              onChange={handleQuantityChange}
+            />
+            <button
+              variant="outlined"
+              className="enquiry-btn-grad"
+              onClick={enquirySender}
+            >
+              Do Enquiry
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

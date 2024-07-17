@@ -4,6 +4,7 @@ import SplashScreen from "@/Components/SplashScreen";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import MainLayout from "../MainLayout";
+import ProductIdPageLayout from "../ProductIdPageLayout";
 
 const LayoutWrapper = ({ children }) => {
   const pathname = usePathname();
@@ -15,6 +16,11 @@ const LayoutWrapper = ({ children }) => {
       return;
     }
   }, [isLoading]);
+
+  const productIdPage = ["/product"];
+  if (pathname.includes(productIdPage)) {
+    return <ProductIdPageLayout>{children}</ProductIdPageLayout>;
+  }
 
   return (
     <div className="layout-wrapper">

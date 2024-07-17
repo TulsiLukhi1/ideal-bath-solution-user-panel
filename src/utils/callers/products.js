@@ -33,3 +33,32 @@ export async function getProducts(
     };
   }
 }
+
+export async function getProductById(productId) {
+  try {
+    const apiEndPoint = `/products/${productId}`;
+    const url = new URL(
+      `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || ""}/api${apiEndPoint}`
+    );
+
+    const response = await fetch(url.toString(),{
+      ...getOptions
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new FetchError(
+        data.errorMessage || "Failed to fetch product",
+        response.status
+      );
+    }
+
+    return { product: data.product, status: response.status };
+  } catch (error) {
+    return {
+      errorMessage: error.message,
+      status: error.status || 500,
+    };
+  }
+}

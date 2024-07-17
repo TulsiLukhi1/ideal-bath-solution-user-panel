@@ -213,3 +213,10 @@ body {
 .liner-2 {
   -webkit-line-clamp: 2;
 }
+
+
+.mui-11imyu0-MuiGrid-root>.MuiGrid-item {
+  padding-left: unset !important;
+  padding-top: unset !important;
+}
+
