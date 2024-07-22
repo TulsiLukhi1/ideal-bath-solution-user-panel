@@ -31,10 +31,6 @@ const SpecificProductCard = ({
   wh_number_to = "",
 }) => {
 
-  const WH_URL = process.env.WH_URL;
-  const WH_TOKEN = process.env.WH_TOKEN;
-  const WH_NUMBER_TO = process.env.WH_NUMBER_TO;
-
   const [quantity, setQuantity] = useState(0);
   const [openNotification, setOpenNotification] = useState(false);
   const [notificationInfo, setNotificationInfo] = useState({
@@ -68,8 +64,8 @@ const SpecificProductCard = ({
 
     // success status code is 2xx
     if (result.status >= 200 && result.status < 300) {
-      console.log("inside 200 status",WH_TOKEN);
-      await sendWhatsappMsg(WH_TOKEN, WH_URL, WH_NUMBER_TO, msg);
+      console.log("inside 200 status",wh_token);
+      await sendWhatsappMsg(wh_token, wh_url, wh_number_to, msg);
       setOpenNotification(true);
       setNotificationInfo({
         type: "success",
